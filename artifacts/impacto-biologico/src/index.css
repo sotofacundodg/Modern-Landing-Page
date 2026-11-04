@@ -480,7 +480,7 @@ button:focus-visible, select:focus-visible, a:focus-visible {
 .filter-note { margin-left: auto; color: #7e8b84; font-size: 10px; }
 .dashboard { position: relative; isolation: isolate; min-height: 994px; padding: 33px 4.4vw 42px; background: #34463d; }
 .visual-backdrop { position: absolute; z-index: -1; inset: 0; overflow: hidden; background: #4b5b4c; }
-.animal-poster, .animal-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 48%; transition: opacity .55s ease, transform 1s ease, filter .55s ease; }
+.animal-poster, .animal-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 40%; transition: opacity .55s ease, transform 1s ease, filter .55s ease; }
 .animal-poster { transform: scale(1.025); }
 .animal-video { opacity: .85; }
 .dashboard[data-profile="aves-larga"] .animal-poster,
@@ -624,7 +624,7 @@ button:focus-visible, select:focus-visible, a:focus-visible {
   .filter-note { grid-column: 1 / -1; margin: 0; font-size: 8px; }
   .dashboard { min-height: 0; padding: 0 13px 18px; background: var(--paper); }
   .visual-backdrop { position: relative; z-index: 0; inset: auto; height: 74svh; min-height: 440px; max-height: 700px; margin: 0 -13px; }
-  .animal-poster, .animal-video { object-position: center 50%; }
+  .animal-poster, .animal-video { object-position: center 40%; }
   .visual-shade { background: linear-gradient(0deg, rgba(20,34,29,.6), rgba(22,38,33,.08) 55%, rgba(20,40,36,.18)); }
   .visual-caption { left: 18px; bottom: 17px; }
   .animal-word { right: 16px; bottom: 16px; font-size: 28px; }
