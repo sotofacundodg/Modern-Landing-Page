@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Impacto biológico en los animales"
+description = "Una página interactiva en español para explorar datos ilustrativos sobre impacto biológico por especie y ciclo productivo, con contexto clínico y evolución temporal."
+version = "1.0.0"
+id = "artifacts/impacto-biologico"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19021
+
+[services.development]
+run = "pnpm --filter @workspace/impacto-biologico run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/impacto-biologico", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/impacto-biologico/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19021"
+BASE_PATH = "/"
