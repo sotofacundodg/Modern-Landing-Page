@@ -203,7 +203,7 @@ function App() {
     </header>
 
     <section className="hero" aria-labelledby="hero-title">
-      <video autoPlay muted loop playsInline preload="metadata" poster="/hero/aves-corta.jpg" aria-hidden="true"><source src="/hero/aves-corta.mp4" type="video/mp4" /></video>
+      <video autoPlay muted loop playsInline preload="metadata" poster="/hero/portada.jpg" aria-hidden="true"><source src="/hero/portada.mp4" type="video/mp4" /></video>
       <div className="hero-shade" />
       <div className="hero-content">
         <span className="eyebrow">{campaign.plataforma.toUpperCase()} · {campaign.estrategia.split(':')[0].toUpperCase()}</span>

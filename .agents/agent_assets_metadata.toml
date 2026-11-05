@@ -28,3 +28,59 @@ mtime_ms = 1793883417661
 storage_uri = "gcs://replit-rams-assets-reed/rams/assets/repl:46c00e3e-79da-4f6f-afaa-488be4c74d97/70d6a3c0-cd8c-465f-b05c-648ec3183225/d6e871f2-67c2-41fc-b4eb-627b806602a8"
 storage_version_token = "1793883490895532"
 content_type = "image/jpeg"
+
+[[outputs]]
+id = "Zt1sd8W07uVJ0LrkZijSc"
+uri = "file://artifacts/impacto-biologico/public/hero/portada.mp4"
+type = "video"
+title = "Video de portada · portada.mp4"
+description = "MP4 optimizado para web: H.264, 1920×1080, CRF 26, sin audio, yuv420p y faststart. Peso: 1,811,328 bytes."
+logical_id = "c260f950-57ac-4515-9af5-02fa895d2ecc"
+content_hash = "sha256:d898262bd7319102561a903b56054a3b006a6e9a7f3f7e9ad672e74508751c79"
+size = 1811328
+mtime_ms = 1793884982788
+storage_uri = "gcs://replit-rams-assets-reed/rams/assets/repl:46c00e3e-79da-4f6f-afaa-488be4c74d97/c260f950-57ac-4515-9af5-02fa895d2ecc/bac685ab-e2d4-4d0a-b1b6-ff7d54d7a0a6"
+storage_version_token = "1793885333611745"
+content_type = "video/mp4"
+
+[[outputs]]
+id = "oHHK9wzL4scYXJl_VGIXC"
+uri = "file://artifacts/impacto-biologico/public/hero/portada.jpg"
+type = "image"
+title = "Poster de portada · portada.jpg"
+description = "Primer cuadro del video optimizado."
+logical_id = "70ca5db2-a201-4d7a-bd31-a02cd9de8540"
+content_hash = "sha256:dd2b1863bda1cb64bb3d6c0f4aef0b788cded94f00ed98049256b618ccaea8ab"
+size = 366254
+mtime_ms = 1793884983502
+storage_uri = "gcs://replit-rams-assets-reed/rams/assets/repl:46c00e3e-79da-4f6f-afaa-488be4c74d97/70ca5db2-a201-4d7a-bd31-a02cd9de8540/8cb97160-dac9-42da-9a50-3a4da7317921"
+storage_version_token = "1793885334154677"
+content_type = "image/jpeg"
+
+[[outputs]]
+id = "8qRj65ydPGMPqy6tTYpCQ"
+uri = "file://generated-artifacts/portada-desktop.jpg"
+type = "image"
+title = "Portada · escritorio"
+description = "Preview de la portada a 1440 px de ancho."
+logical_id = "55e841eb-18f8-4b9b-b59c-b62588632c22"
+content_hash = "sha256:e5fdb638a991e49fa882a66d6054b1e6b2d4582cc1f9addb7f0c4c5860bae130"
+size = 137576
+mtime_ms = 1793885302361
+storage_uri = "gcs://replit-rams-assets-reed/rams/assets/repl:46c00e3e-79da-4f6f-afaa-488be4c74d97/55e841eb-18f8-4b9b-b59c-b62588632c22/1050c1b7-d21c-4270-91f4-d46dd28589ac"
+storage_version_token = "1793885334660871"
+content_type = "image/jpeg"
+
+[[outputs]]
+id = "bxINR315IleCI1wwG7xR_"
+uri = "file://generated-artifacts/portada-mobile.jpg"
+type = "image"
+title = "Portada · celular"
+description = "Preview de la portada a 402 px de ancho."
+logical_id = "03136e11-e92b-4d21-ac61-c18c5d23785d"
+content_hash = "sha256:ce9800692048aea2d1436b22ecb6b08ffb1f4e9735c3104db389090d05b1e10b"
+size = 63006
+mtime_ms = 1793885303929
+storage_uri = "gcs://replit-rams-assets-reed/rams/assets/repl:46c00e3e-79da-4f6f-afaa-488be4c74d97/03136e11-e92b-4d21-ac61-c18c5d23785d/ce4c36f9-2db1-40a5-8e80-73d808ad418a"
+storage_version_token = "1793885335234598"
+content_type = "image/jpeg"
