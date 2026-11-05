@@ -1,0 +1,30 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "-0gYAhLKFZMezdNM1TTYJ"
+uri = "file://generated-artifacts/salud-intestinal-desktop.jpg"
+type = "image"
+title = "Salud intestinal · escritorio"
+description = "Vista completa del tablero a 1440 px de ancho."
+logical_id = "32102518-8642-4ed5-b2b8-eae10d942193"
+content_hash = "sha256:fa18af22bfed8750582317525a7bc5f33631270058167ac57f1113ea3a9ff33b"
+size = 363411
+mtime_ms = 1793883415845
+storage_uri = "gcs://replit-rams-assets-reed/rams/assets/repl:46c00e3e-79da-4f6f-afaa-488be4c74d97/32102518-8642-4ed5-b2b8-eae10d942193/291c9e60-66fb-4f15-892b-b75beb2b6d51"
+storage_version_token = "1793883490367030"
+content_type = "image/jpeg"
+
+[[outputs]]
+id = "LdPyLbmZ1HTtWcgYKtIfG"
+uri = "file://generated-artifacts/salud-intestinal-mobile.jpg"
+type = "image"
+title = "Salud intestinal · celular"
+description = "Vista completa del tablero a 402 px de ancho, en una columna."
+logical_id = "70d6a3c0-cd8c-465f-b05c-648ec3183225"
+content_hash = "sha256:92bac651c9ca97fea238e0b17e3428ecfbf1d39c2c5a2eec5ad179706c5cfe95"
+size = 253267
+mtime_ms = 1793883417661
+storage_uri = "gcs://replit-rams-assets-reed/rams/assets/repl:46c00e3e-79da-4f6f-afaa-488be4c74d97/70d6a3c0-cd8c-465f-b05c-648ec3183225/d6e871f2-67c2-41fc-b4eb-627b806602a8"
+storage_version_token = "1793883490895532"
+content_type = "image/jpeg"
