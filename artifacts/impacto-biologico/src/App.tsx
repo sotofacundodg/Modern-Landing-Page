@@ -92,59 +92,72 @@ function ArgentinaMap() {
   const [metric, setMetric] = useState<MapMetric>('investment');
   const [hovered, setHovered] = useState<Province | null>(null);
   const [pinned, setPinned] = useState<Province | null>(null);
+  const [showNoDelivery, setShowNoDelivery] = useState(false);
   const selected = hovered ?? pinned;
-  const ordered = useMemo(() => [...provinces].sort((a, b) => {
-    const value = (province: Province) => metric === 'investment' ? province.inversion ?? -1 : province.alcance ?? -1;
-    return value(b) - value(a);
-  }), [metric]);
-  const investmentOrder = [...provinces].sort((a, b) => (b.inversion ?? -1) - (a.inversion ?? -1));
-  const topFour = investmentOrder.filter(p => p.tieneEntrega).slice(0, 4).reduce((sum, p) => sum + (p.pctInversion ?? 0), 0);
+  const ordered = useMemo(() => provinces.filter(province => province.tieneEntrega).sort((a, b) => (b.inversion ?? -1) - (a.inversion ?? -1)), []);
+  const noDelivery = useMemo(() => provinces.filter(province => !province.tieneEntrega), []);
+  const topFour = ordered.slice(0, 4).reduce((sum, province) => sum + (province.pctInversion ?? 0), 0);
   const buenosAires = provinces.find(p => p.provincia === 'Buenos Aires')!;
-  const displayValue = (p: Province) => metric === 'investment'
-    ? (p.inversion == null ? '—' : ars(p.inversion))
-    : (p.alcance == null ? '—' : count(p.alcance));
-  const metricShareLabel = metric === 'investment' ? 'de la inversión' : 'del alcance total';
   const metricTitle = metric === 'investment' ? 'participación de la inversión' : 'participación del alcance total';
   const activate = (province: Province) => { setHovered(province); setPinned(province); };
   return <div className="map-card">
-    <div className="map-visual" onMouseLeave={() => setHovered(null)}>
-      <svg className="map-svg" viewBox={`0 0 ${campaignData.mapa.viewBoxAncho} ${campaignData.mapa.viewBoxAlto}`} role="group" aria-label="Mapa interactivo de las provincias argentinas">
-        {provinces.map(province => <path key={province.provincia} d={province.svgPath} fill={provinceFill(province, metric)} className={`province-path ${selected?.provincia === province.provincia ? 'is-active' : ''}`} tabIndex={0} role="button" aria-label={`${province.provincia}${province.tieneEntrega ? `, alcance ${count(province.alcance ?? 0)}, inversión ${ars(province.inversion ?? 0)}` : ', Sin entrega en esta campaña'}`} onMouseEnter={() => setHovered(province)} onFocus={() => setHovered(province)} onBlur={() => setHovered(null)} onClick={() => activate(province)} onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); activate(province); } }}><title>{province.provincia}</title></path>)}
-        {provinces.map(p => <text key={`label-${p.provincia}`} x={p.centroX} y={p.centroY} textAnchor="middle" className="map-label" aria-hidden="true">{p.provincia === 'Buenos Aires' ? 'BA' : p.provincia === 'Tierra del Fuego' ? 'TF' : p.provincia === 'Entre Ríos' ? 'ER' : p.provincia === 'Santiago del Estero' ? 'SDE' : p.provincia === 'Santa Cruz' ? 'SC' : p.provincia === 'Río Negro' ? 'RN' : p.provincia === 'La Rioja' ? 'LR' : p.provincia === 'San Juan' ? 'SJ' : p.provincia === 'San Luis' ? 'SL' : p.provincia === 'La Pampa' ? 'LP' : p.provincia === 'Santa Fe' ? 'SF' : p.provincia === 'Córdoba' ? 'CBA' : p.provincia === 'Mendoza' ? 'MZA' : p.provincia === 'Tucumán' ? 'TUC' : p.provincia === 'Catamarca' ? 'CAT' : p.provincia === 'Neuquén' ? 'NQN' : p.provincia === 'Chubut' ? 'CH' : p.provincia === 'Formosa' ? 'FSA' : p.provincia === 'Corrientes' ? 'COR' : p.provincia === 'Misiones' ? 'MIS' : p.provincia === 'Jujuy' ? 'JUJ' : p.provincia === 'Salta' ? 'SAL' : p.provincia === 'Chaco' ? 'CHA' : 'CABA'}</text>)}
-        {provinces.filter(p => p.provincia === 'CABA').map(p => <circle key="caba-dot" cx={p.centroX} cy={p.centroY} r="4" className={`caba-marker ${selected?.provincia === p.provincia ? 'is-active' : ''}`} fill="#81BC46" tabIndex={0} role="button" aria-label="CABA" onMouseEnter={() => setHovered(p)} onFocus={() => setHovered(p)} onClick={() => activate(p)} onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); activate(p); } }} />)}
-      </svg>
-      {hovered && <aside className="map-tooltip" aria-live="polite">
-        <strong>{hovered.provincia}</strong>
-        <ProvinceStats province={hovered} />
-      </aside>}
+    <div className="map-column">
+      <div className="map-sticky">
+        <div className="map-visual" onMouseLeave={() => setHovered(null)}>
+          <svg className="map-svg" viewBox={`0 0 ${campaignData.mapa.viewBoxAncho} ${campaignData.mapa.viewBoxAlto}`} role="group" aria-label="Mapa interactivo de las provincias argentinas">
+            {provinces.map(province => <path key={province.provincia} d={province.svgPath} fill={provinceFill(province, metric)} className={`province-path ${selected?.provincia === province.provincia ? 'is-active' : ''}`} tabIndex={0} role="button" aria-label={`${province.provincia}${province.tieneEntrega ? `, alcance ${count(province.alcance ?? 0)}, inversión ${ars(province.inversion ?? 0)}` : ', Sin entrega en esta campaña'}`} onMouseEnter={() => setHovered(province)} onFocus={() => setHovered(province)} onBlur={() => setHovered(null)} onClick={() => activate(province)} onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); activate(province); } }}><title>{province.provincia}</title></path>)}
+            {provinces.map(p => <text key={`label-${p.provincia}`} x={p.centroX} y={p.centroY} textAnchor="middle" className="map-label" aria-hidden="true">{p.provincia === 'Buenos Aires' ? 'BA' : p.provincia === 'Tierra del Fuego' ? 'TF' : p.provincia === 'Entre Ríos' ? 'ER' : p.provincia === 'Santiago del Estero' ? 'SDE' : p.provincia === 'Santa Cruz' ? 'SC' : p.provincia === 'Río Negro' ? 'RN' : p.provincia === 'La Rioja' ? 'LR' : p.provincia === 'San Juan' ? 'SJ' : p.provincia === 'San Luis' ? 'SL' : p.provincia === 'La Pampa' ? 'LP' : p.provincia === 'Santa Fe' ? 'SF' : p.provincia === 'Córdoba' ? 'CBA' : p.provincia === 'Mendoza' ? 'MZA' : p.provincia === 'Tucumán' ? 'TUC' : p.provincia === 'Catamarca' ? 'CAT' : p.provincia === 'Neuquén' ? 'NQN' : p.provincia === 'Chubut' ? 'CH' : p.provincia === 'Formosa' ? 'FSA' : p.provincia === 'Corrientes' ? 'COR' : p.provincia === 'Misiones' ? 'MIS' : p.provincia === 'Jujuy' ? 'JUJ' : p.provincia === 'Salta' ? 'SAL' : p.provincia === 'Chaco' ? 'CHA' : 'CABA'}</text>)}
+            {provinces.filter(p => p.provincia === 'CABA').map(p => <circle key="caba-dot" cx={p.centroX} cy={p.centroY} r="4" className={`caba-marker ${selected?.provincia === p.provincia ? 'is-active' : ''}`} fill="#81BC46" tabIndex={0} role="button" aria-label="CABA" onMouseEnter={() => setHovered(p)} onFocus={() => setHovered(p)} onClick={() => activate(p)} onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); activate(p); } }} />)}
+          </svg>
+          {hovered && <aside className="map-tooltip" aria-live="polite">
+            <strong>{hovered.provincia}</strong>
+            <ProvinceStats province={hovered} />
+          </aside>}
+        </div>
+        <div className="legend" aria-label={`Leyenda de ${metricTitle}`}>
+          <span className="legend-heading">Color: {metricTitle}</span>
+          {[['#0F3478','40% o más'],['#3B82C2','10 a 40%'],['#7FA9D8','5 a 10%'],['#BCD3EC','1 a 5%'],['#E7ECF3','Sin entrega']].map(([color, text]) => <span className="legend-item" key={text}><i style={{ background: color }} />{text}</span>)}
+        </div>
+      </div>
     </div>
     <div className="map-side">
       {pinned && <aside className="detail-panel" aria-live="polite">
         <header><span>{pinned.provincia}</span><button type="button" aria-label="Cerrar detalle de provincia" onClick={() => { setPinned(null); setHovered(null); }}>×</button></header>
         <ProvinceStats province={pinned} />
       </aside>}
-      <div className="map-toolbar"><h3>Entrega por provincia</h3><div className="switch-control" role="group" aria-label="Métrica del mapa y ranking">
+      <div className="map-toolbar"><h3>Ranking por inversión</h3><div className="switch-control" role="group" aria-label="Métrica del mapa">
         <button type="button" className={metric === 'investment' ? 'active' : ''} aria-pressed={metric === 'investment'} onClick={() => setMetric('investment')}>% de la inversión</button>
         <button type="button" className={metric === 'reach' ? 'active' : ''} aria-pressed={metric === 'reach'} onClick={() => setMetric('reach')}>Personas alcanzadas</button>
       </div></div>
-      <div className="legend" aria-label={`Leyenda de ${metricTitle}`}>
-        <span className="legend-heading">Color: {metricTitle}</span>
-        {[['#0F3478','40% o más'],['#3B82C2','10 a 40%'],['#7FA9D8','5 a 10%'],['#BCD3EC','1 a 5%'],['#E7ECF3','Sin entrega']].map(([color, text]) => <span className="legend-item" key={text}><i style={{ background: color }} />{text}</span>)}
-      </div>
       <div className="province-list" aria-label="Ranking provincial">
         {ordered.map((province, index) => {
-          const value = metric === 'investment' ? province.inversion ?? 0 : province.alcance ?? 0;
-          const share = provinceShare(province, metric) ?? 0;
+          const share = province.pctInversion ?? 0;
           return <button type="button" key={province.provincia} className={`province-row ${selected?.provincia === province.provincia ? 'is-active' : ''}`} onMouseEnter={() => setHovered(province)} onFocus={() => setHovered(province)} onBlur={() => setHovered(null)} onClick={() => activate(province)} data-testid={`button-province-${index}`}>
-            <span className="rank">{province.tieneEntrega ? String(index + 1).padStart(2, '0') : '—'}</span>
-            <span className="province-copy"><strong>{province.provincia}</strong><small>{province.tieneEntrega ? `${percent(share * 100, 1)} ${metricShareLabel}` : 'Sin entrega en esta campaña'}</small><i className="ranking-track" aria-hidden="true"><i style={{ width: `${share * 100}%` }} /></i></span>
-            <span className="province-value">{displayValue(province)}</span>
+            <span className="rank">{String(index + 1).padStart(2, '0')}</span>
+            <span className="province-copy"><strong>{province.provincia}</strong><small>{count(province.alcance ?? 0)} personas alcanzadas · {ars(province.costoPorPersona ?? 0, 2)} por persona</small></span>
+            <i className="ranking-track" aria-hidden="true"><i style={{ width: `${share * 100}%` }} /></i>
+            <span className="province-share">{percent(share * 100, 1)}</span>
+            <span className="province-value">{ars(province.inversion ?? 0)}</span>
           </button>;
         })}
       </div>
+      <div className="no-delivery">
+        <div className="no-delivery-line">
+          <span><i aria-hidden="true" />{count(noDelivery.length)} provincias sin entrega en esta campaña</span>
+          <button type="button" aria-expanded={showNoDelivery} aria-controls="no-delivery-provinces" onClick={() => setShowNoDelivery(value => !value)}>{showNoDelivery ? 'Ocultar' : 'Ver cuáles'}</button>
+        </div>
+        {showNoDelivery && <div className="no-delivery-chips" id="no-delivery-provinces">
+          {noDelivery.map(province => <button type="button" key={province.provincia} className={`no-delivery-chip ${selected?.provincia === province.provincia ? 'is-active' : ''}`} onMouseEnter={() => setHovered(province)} onMouseLeave={() => setHovered(null)} onFocus={() => setHovered(province)} onBlur={() => setHovered(null)} onClick={() => activate(province)}>{province.provincia}</button>)}
+        </div>}
+      </div>
       <div className="map-callout">Cuatro jurisdicciones concentran el <strong>{percent(topFour * 100, 0)}</strong> de la inversión. Buenos Aires sola, el <strong>{percent((buenosAires.pctInversion ?? 0) * 100, 0)}</strong>.</div>
-      <p className="regional-note">{campaignData.avisos.regional}</p>
-      <div className="regional-extra"><span>Otras / sin identificar · alcance <b>{count(campaignData.otrasSinIdentificar.alcance)}</b></span><span>Inversión <b>{ars(campaignData.otrasSinIdentificar.inversion)}</b></span></div>
+      <details className="province-notes">
+        <summary>Notas sobre los datos por provincia</summary>
+        <div className="province-notes-body">
+          <p className="regional-note">{campaignData.avisos.regional}</p>
+          <div className="regional-extra"><span>Otras / sin identificar · alcance <b>{count(campaignData.otrasSinIdentificar.alcance)}</b></span><span>Inversión <b>{ars(campaignData.otrasSinIdentificar.inversion)}</b></span></div>
+        </div>
+      </details>
     </div>
   </div>;
 }
